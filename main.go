@@ -52,6 +52,9 @@ func newHandler(secret []byte, routes map[string]string) http.Handler {
 				outgoing.Set(name, v)
 			}
 		}
+		if prefix == "products" {
+			outgoing.Set("X-Cache-Control", r.Header.Get("X-Cache-Control"))
+		}
 		if !public {
 			fields := strings.Fields(r.Header.Get("Authorization"))
 			if len(fields) != 2 || !strings.EqualFold(fields[0], "Bearer") {
